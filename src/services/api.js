@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Criamos uma instância do axios apontando para o nosso FastAPI
 const api = axios.create({
-  baseURL: 'http://127.0.0.1:8000',
+  baseURL: 'https://github.com/Garbim-Dev/point-frontend.git',
 });
 
 export default api;
