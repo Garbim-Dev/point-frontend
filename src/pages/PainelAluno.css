@@ -1,0 +1,249 @@
+.leitura-container {
+  font-family: system-ui, -apple-system, sans-serif;
+  background-color: #ffffff; /* Fundo branco puro */
+  min-height: 100vh;
+  padding-bottom: 20px;
+}
+
+/* --- CABEÇALHO COM EFEITO DE FUSÃO --- */
+.leitura-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 25px;
+  height: 75px;
+  background-color: #ffffff; /* Fundo branco puro */
+  
+  /* Sombras que criam o efeito de relevo/fusão */
+  box-shadow: 
+    inset 0 -1px 0 rgba(0,0,0,0.05),
+    0 4px 10px rgba(0,0,0,0.02);
+  
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-img {
+  height: 62px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  border-radius: 20px; 
+  background-color: #ffffff; /* Fundo branco puro */
+  padding: 10px; 
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.10); /* Sombra levemente reduzida para o fundo branco */
+}
+
+/* --- O SLOGAN BEM ESPESSO E EM NEGRITO --- */
+.slogan-texto {
+  font-family: 'Arial Black', system-ui, -apple-system, sans-serif;
+  font-size: 15px;
+  font-weight: 900; 
+  color: #005A9C; 
+  line-height: 1.1; 
+  text-transform: uppercase; 
+  letter-spacing: -0.5px; 
+}
+
+.btn-login-icone {
+  background: #ffffff; /* Fundo branco puro */
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 
+    4px 4px 8px #ebecef,
+    -4px -4px 8px #ffffff;
+}
+
+.btn-login-icone:hover {
+  box-shadow: 
+    inset 2px 2px 5px #ebecef,
+    inset -2px -2px 5px #ffffff;
+  transform: translateY(1px);
+}
+
+/* --- FILTROS --- */
+.filtros-section {
+  background-color: #ffffff; /* Fundo branco puro */
+  padding: 20px;
+}
+
+.filtro-sala-row {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+  margin-bottom: 15px;
+}
+
+.input-group-filtro {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.input-group-filtro label {
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  background: #ffffff; /* Fundo branco puro */
+  padding: 0 5px;
+  font-size: 12px;
+  color: #666;
+}
+
+.input-group-filtro select {
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  appearance: none;
+  background-color: #ffffff; /* Fundo branco puro */
+  box-shadow: 
+    inset 3px 3px 6px #ebecef,
+    inset -3px -3px 6px #ffffff;
+  color: #333;
+}
+
+.btn-calendario {
+  background: #ffffff; /* Fundo branco puro */
+  border: none;
+  border-radius: 12px;
+  padding: 10px 12px;
+  cursor: pointer;
+  box-shadow: 
+    3px 3px 6px #ebecef,
+    -3px -3px 6px #ffffff;
+}
+
+/* --- BOTÕES DE TURNO --- */
+.filtros-turno {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 5px 0;
+}
+
+.btn-turno {
+  background-color: #ffffff; /* Fundo branco puro */
+  border: none;
+  border-radius: 50px;
+  padding: 10px 20px;
+  font-size: 14px;
+  color: #666;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 
+    3px 3px 6px #ebecef,
+    -3px -3px 6px #ffffff;
+  transition: 0.2s;
+}
+
+.btn-turno.ativo {
+  background-color: #ffffff; /* Fundo branco puro */
+  color: #005A9C;
+  font-weight: bold;
+  box-shadow: 
+    inset 2px 2px 5px #ebecef,
+    inset -2px -2px 5px #ffffff;
+}
+
+/* --- BARRA DE STATUS --- */
+.status-bar {
+  background-color: #f1f3f5; /* Um cinza bem leve para contrastar com o branco puro */
+  text-align: center;
+  padding: 8px;
+  font-size: 13px;
+  color: #777;
+  border-radius: 50px;
+  margin: 0 20px;
+}
+
+/* --- LISTA DE CARTÕES --- */
+.cards-list {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.card-turma {
+  background: #ffffff; /* Fundo branco puro */
+  border-radius: 15px;
+  border: none;
+  overflow: hidden;
+  box-shadow: 
+    6px 6px 15px rgba(0,0,0,0.06); /* Sombra ajustada para o branco */
+}
+
+.card-turma-header {
+  background-color: #005A9C; /* Atualizado para o Azul SENAI */
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+}
+
+.professor-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.professor-info h3 {
+  margin: 0;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+}
+
+.badge-turno {
+  background-color: rgba(255,255,255,0.15);
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.card-turma-body {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.info-linha {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.data-linha { color: #666; }
+.icone-cinza { color: #999; flex-shrink: 0; margin-top: 2px; }
+
+.destaque-vermelho { color: #cc0000; }
+.icone-vermelho { color: #cc0000; flex-shrink: 0; margin-top: 2px; }
+
+.rodape-card {
+  margin-top: 5px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(0,0,0,0.05);
+  font-size: 13px;
+  color: #999;
+}
+
+.loading-mensagem, .empty-state { text-align: center; margin-top: 40px; color: #666; }

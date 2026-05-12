@@ -1,0 +1,75 @@
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #f4f7f6 0%, #e0e8e5 100%);
+  font-family: system-ui, -apple-system, sans-serif;
+  padding: 20px;
+}
+
+.login-card {
+  background: white;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  padding: 40px 30px;
+  overflow: hidden;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* --- MUDANÇA AQUI: Trocamos o circulo pela imagem --- */
+.logo-imagem {
+  height: 160px; /* Tamanho ajustável */
+  width: auto;
+  object-fit: contain;
+  margin: 0 auto 15px;
+  display: block;
+}
+
+.login-header h2 { margin: 0; color: #333; font-size: 24px; }
+.login-header p { margin: 5px 0 0; color: #666; font-size: 14px; }
+
+/* --- CAIXA DE ERRO --- */
+.mensagem-erro {
+  background-color: #ffebee;
+  color: #cc0000;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 14px;
+  margin-bottom: 15px;
+  border: 1px solid #ffcdd2;
+}
+
+.login-form { display: flex; flex-direction: column; gap: 15px; }
+.login-form h3 { margin: 0 0 10px; color: #333; text-align: center; font-size: 18px; }
+.texto-instrucao { font-size: 14px; color: #555; text-align: center; margin-bottom: 10px; line-height: 1.4; }
+
+.input-with-icon { position: relative; display: flex; align-items: center; }
+.input-with-icon .icon { position: absolute; left: 12px; color: #888; }
+.input-with-icon input { width: 100%; padding: 12px 12px 12px 40px; border: 1px solid #ddd; border-radius: 8px; font-size: 15px; outline: none; transition: border-color 0.2s; }
+.input-with-icon input:focus { border-color: #005A9C; }
+
+.btn-primario { background-color: #005A9C; color: white; padding: 14px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; transition: 0.2s; margin-top: 10px; }
+.btn-primario:hover { background-color: #00457a; }
+.btn-primario:disabled { background-color: #88b3d6; cursor: not-allowed; } /* Efeito ao carregar */
+
+.login-links { display: flex; justify-content: space-between; margin-top: 15px; }
+.btn-link, .btn-voltar { background: none; border: none; font-size: 14px; color: #666; cursor: pointer; transition: 0.2s; }
+.btn-link:hover { color: #005A9C; text-decoration: underline; }
+.btn-link.destaque { color: #005A9C; font-weight: bold; }
+.btn-voltar { display: flex; justify-content: center; align-items: center; gap: 5px; margin-top: 15px; color: #888; width: 100%; }
+.btn-voltar:hover { color: #333; }
+
+/* Animação suave na troca de telas */
+.animacao-deslize { animation: fadeSlide 0.3s ease-out; }
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
