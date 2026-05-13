@@ -52,7 +52,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      await api.post('/gestores/', {
+      await api.post('/gestores', {
         nome: formData.nome,
         email: formData.email,
         senha: formData.senha,
