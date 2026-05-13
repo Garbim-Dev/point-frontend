@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import api from '../services/api'; 
-import { Mail, Lock, User, ArrowLeft, Send } from 'lucide-react';
+import { Mail, Lock, ArrowLeft, Send } from 'lucide-react';
 import './Login.css';
 
 const Login = () => {
   const navigate = useNavigate();
-  // Controle de qual tela estamos vendo: 'login', 'cadastro' ou 'recuperacao'
+  // Controle de qual tela estamos vendo: apenas 'login' ou 'recuperacao' agora
   const [view, setView] = useState('login'); 
-  const [formData, setFormData] = useState({ nome: '', email: '', senha: '' });
+  const [formData, setFormData] = useState({ email: '', senha: '' });
   
   // Novos estados para dar feedback ao usuário
   const [erro, setErro] = useState('');
@@ -45,28 +45,6 @@ const Login = () => {
     }
   };
 
-  // Lógica Real de Cadastro no Banco de Dados
-  const handleCadastro = async (e) => {
-    e.preventDefault();
-    setErro('');
-    setLoading(true);
-
-    try {
-      await api.post('/gestores', {
-        nome: formData.nome,
-        email: formData.email,
-        senha: formData.senha,
-        funcao: 'Coordenação' // Função padrão para novos cadastros
-      });
-      alert("Conta criada com sucesso! Faça o login para entrar.");
-      setView('login'); // Volta pra tela de login
-    } catch (error) {
-      setErro("Erro ao criar conta. Este e-mail já pode estar em uso.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleRecuperacao = (e) => {
     e.preventDefault();
     alert(`Instruções de recuperação enviadas para o e-mail: ${formData.email}`);
@@ -91,10 +69,10 @@ const Login = () => {
         {/* Caixa de mensagens de erro (Aparece se houver erro) */}
         {erro && <div className="mensagem-erro animacao-deslize">{erro}</div>}
 
-        {/* TELA DE LOGIN */}
+        {/* TELA DE LOGIN - AGORA É A ÚNICA PORTA DE ENTRADA */}
         {view === 'login' && (
           <form onSubmit={handleLogin} className="login-form animacao-deslize">
-            <h3>Acesse sua conta</h3>
+            <h3>Acesso Restrito</h3>
             <div className="input-with-icon">
               <Mail className="icon" size={20} />
               <input type="email" name="email" placeholder="Seu e-mail" onChange={handleInputChange} required />
@@ -108,37 +86,10 @@ const Login = () => {
               {loading ? 'Validando...' : 'Entrar'}
             </button>
             
-            <div className="login-links">
+            {/* Links atualizados: Sem botão de cadastro, "Esqueci minha senha" centralizado */}
+            <div className="login-links" style={{ justifyContent: 'center' }}>
               <button type="button" onClick={() => mudarTela('recuperacao')} className="btn-link">Esqueci minha senha</button>
-              <button type="button" onClick={() => mudarTela('cadastro')} className="btn-link destaque">Criar nova conta</button>
             </div>
-          </form>
-        )}
-
-        {/* TELA DE CADASTRO */}
-        {view === 'cadastro' && (
-          <form onSubmit={handleCadastro} className="login-form animacao-deslize">
-            <h3>Novo Cadastro</h3>
-            <div className="input-with-icon">
-              <User className="icon" size={20} />
-              <input type="text" name="nome" placeholder="Nome completo" onChange={handleInputChange} required />
-            </div>
-            <div className="input-with-icon">
-              <Mail className="icon" size={20} />
-              <input type="email" name="email" placeholder="E-mail" onChange={handleInputChange} required />
-            </div>
-            <div className="input-with-icon">
-              <Lock className="icon" size={20} />
-              <input type="password" name="senha" placeholder="Crie uma senha" onChange={handleInputChange} required />
-            </div>
-            
-            <button type="submit" className="btn-primario" disabled={loading}>
-              {loading ? 'Cadastrando...' : 'Cadastrar'}
-            </button>
-            
-            <button type="button" onClick={() => mudarTela('login')} className="btn-voltar">
-              <ArrowLeft size={16} /> Voltar para o Login
-            </button>
           </form>
         )}
 

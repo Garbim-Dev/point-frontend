@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { 
-  Users, MapPin, BookOpen, Building2, Clock, 
-  Layers, CalendarCheck, ArrowLeft, Plus, Pencil, Trash2, KeyRound, X
+  Users, MapPin, BookOpen, Building2, CalendarCheck, 
+  Layers, ArrowLeft, Plus, Pencil, Trash2, KeyRound, X, UserPlus
 } from 'lucide-react';
 import './PainelCoordenador.css';
 
@@ -68,6 +68,10 @@ const PainelCoordenador = () => {
   const [modalSenha, setModalSenha] = useState(false);
   const [dadosSenha, setDadosSenha] = useState({ email: '', senhaAtual: '', novaSenha: '' });
 
+  // ESTADOS DO NOVO CADASTRO DE GESTOR
+  const [novoGestor, setNovoGestor] = useState({ nome: '', email: '', senha: '' });
+  const [mensagemGestor, setMensagemGestor] = useState('');
+
   const [listasApoio, setListasApoio] = useState({ professores: [], salas: [], cursos: [], disciplinas: [], empresas: [], turnos: [], modalidades: [] });
 
   useEffect(() => {
@@ -76,6 +80,9 @@ const PainelCoordenador = () => {
   }, [abaAtiva]);
 
   const carregarDadosPrincipais = async () => {
+    // Evita que o sistema tente buscar dados na API quando estivermos na aba de criar coordenador
+    if (abaAtiva === 'novoGestor') return;
+
     setLoading(true);
     try {
       const response = await api.get(`/${abaAtiva}/`);
@@ -97,6 +104,24 @@ const PainelCoordenador = () => {
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // FUNÇÃO DE SALVAR O NOVO COORDENADOR
+  const handleCadastroGestor = async (e) => {
+    e.preventDefault();
+    setMensagemGestor('');
+    try {
+      await api.post('/gestores', {
+        nome: novoGestor.nome,
+        email: novoGestor.email,
+        senha: novoGestor.senha,
+        funcao: 'Coordenação'
+      });
+      setMensagemGestor("Coordenador cadastrado com sucesso!");
+      setNovoGestor({ nome: '', email: '', senha: '' }); // Limpa o formulário após o sucesso
+    } catch (error) {
+      setMensagemGestor("Erro ao cadastrar. Verifique se o e-mail já existe no sistema.");
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -290,7 +315,6 @@ const PainelCoordenador = () => {
     <div className="admin-layout">
       <aside className="admin-sidebar">
         <div className="sidebar-header">
-          {/* AQUI ESTÁ A LOGO CORRIGIDA */}
           <img src="/logoh.png" alt="Logo Point" className="sidebar-logo" />
         </div>
         <nav className="sidebar-nav">
@@ -303,7 +327,13 @@ const PainelCoordenador = () => {
           <button className={`nav-btn ${abaAtiva === 'empresas' ? 'active' : ''}`} onClick={() => setAbaAtiva('empresas')}><Building2 size={20}/> Empresas</button>
           <button className={`nav-btn ${abaAtiva === 'modalidades' ? 'active' : ''}`} onClick={() => setAbaAtiva('modalidades')}><Layers size={20}/> Modalidades</button>
         </nav>
+        
+        {/* NOVA ABA PARA CADASTRO DE COORDENADORES */}
         <div className="nav-divider">Configurações</div>
+        <button className={`nav-btn ${abaAtiva === 'novoGestor' ? 'active' : ''}`} onClick={() => setAbaAtiva('novoGestor')}>
+          <UserPlus size={20}/> Novo Coordenador
+        </button>
+        
         <button className="nav-btn" onClick={() => setModalSenha(true)}>
           <KeyRound size={20}/> Alterar Senha
         </button>
@@ -315,10 +345,11 @@ const PainelCoordenador = () => {
       <main className="admin-main">
         <header className="main-header">
           <div>
-            <h1>{abaAtiva === 'alocacoes' ? 'Gestão de Turmas' : configTabelas[abaAtiva].titulo}</h1>
+            {/* O cabeçalho se ajusta se a aba do Novo Coordenador estiver ativa */}
+            <h1>{abaAtiva === 'alocacoes' ? 'Gestão de Turmas' : abaAtiva === 'novoGestor' ? 'Controle de Acesso' : configTabelas[abaAtiva].titulo}</h1>
             <p>Olá, <strong>{nomeGestor}</strong>! Gerencie os registros ativos no sistema.</p>
           </div>
-          {!mostrarForm && (
+          {abaAtiva !== 'novoGestor' && !mostrarForm && (
             <button className="add-btn" onClick={() => setMostrarForm(true)}>
               <Plus size={18}/> Novo Registro
             </button>
@@ -328,58 +359,120 @@ const PainelCoordenador = () => {
         {loading ? <p>Carregando dados...</p> : (
           <div className="dashboard-content">
             
-            {mostrarForm && (
-              <div className="card form-card mb-4">
-                <h2>{editingId ? 'Editando Registro' : 'Novo Cadastro'}</h2>
-                {abaAtiva === 'alocacoes' ? renderFormularioAlocacao() : renderFormularioApoio()}
-              </div>
-            )}
+            {/* TELA EXCLUSIVA DO NOVO COORDENADOR */}
+            {abaAtiva === 'novoGestor' ? (
+              <div className="card form-card mb-4 animacao-deslize">
+                <h3>Cadastrar Novo Coordenador (Acesso Restrito)</h3>
+                <p style={{color: '#666', fontSize: '14px', marginBottom: '20px'}}>
+                  Preencha os dados abaixo para gerar um novo acesso administrativo. A senha criada aqui é provisória e pode ser alterada pelo usuário posteriormente.
+                </p>
 
-            <div className="card table-card">
-              <table className="modern-table">
-                <thead>
-                  {abaAtiva === 'alocacoes' ? (
-                    <tr><th>Turma e Período</th><th>Sala</th><th>Ações</th></tr>
-                  ) : (
-                    <tr><th>Dados Básicos</th><th>Ações</th></tr>
-                  )}
-                </thead>
-                <tbody>
-                  {dados.length === 0 ? (
-                    <tr><td colSpan="3" style={{textAlign:'center'}}>Nenhum registro encontrado.</td></tr>
-                  ) : dados.map(item => (
-                    <tr key={item.id}>
+                {mensagemGestor && (
+                  <div className="mb-4">
+                    <span className="badge-info" style={{ fontSize: '14px', padding: '8px 12px' }}>
+                      {mensagemGestor}
+                    </span>
+                  </div>
+                )}
+
+                <form onSubmit={handleCadastroGestor} className="modern-form">
+                  <div className="input-grid">
+                    <div className="field">
+                      <label>Nome Completo</label>
+                      <input 
+                        type="text" 
+                        value={novoGestor.nome} 
+                        onChange={(e) => setNovoGestor({...novoGestor, nome: e.target.value})} 
+                        required 
+                        placeholder="Nome do membro da equipe"
+                      />
+                    </div>
+                    <div className="field">
+                      <label>E-mail Institucional</label>
+                      <input 
+                        type="email" 
+                        value={novoGestor.email} 
+                        onChange={(e) => setNovoGestor({...novoGestor, email: e.target.value})} 
+                        required 
+                        placeholder="email@escola.com"
+                      />
+                    </div>
+                    <div className="field">
+                      <label>Senha Provisória</label>
+                      <input 
+                        type="password" 
+                        value={novoGestor.senha} 
+                        onChange={(e) => setNovoGestor({...novoGestor, senha: e.target.value})} 
+                        required 
+                        placeholder="Crie uma senha inicial"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="form-buttons" style={{ marginTop: '15px' }}>
+                    <button type="submit" className="btn-primary">Salvar Acesso</button>
+                  </div>
+                </form>
+              </div>
+
+            // O RESTO DO SISTEMA (Tabelas e Formulários Base)
+            ) : (
+              <>
+                {mostrarForm && (
+                  <div className="card form-card mb-4">
+                    <h2>{editingId ? 'Editando Registro' : 'Novo Cadastro'}</h2>
+                    {abaAtiva === 'alocacoes' ? renderFormularioAlocacao() : renderFormularioApoio()}
+                  </div>
+                )}
+
+                <div className="card table-card">
+                  <table className="modern-table">
+                    <thead>
                       {abaAtiva === 'alocacoes' ? (
-                        <>
-                          <td>
-                            <strong>{item.professor?.nome}</strong><br/>
-                            <small>{item.curso?.nome} | {item.data_ini_dic} a {item.data_fim_dic}</small>
-                          </td>
-                          <td><span className="badge-info">{item.sala?.nome}</span></td>
-                        </>
+                        <tr><th>Turma e Período</th><th>Sala</th><th>Ações</th></tr>
                       ) : (
-                        <td>
-                          <strong>{item.nome}</strong>
-                          {item.email && <><br/><small>{item.email}</small></>}
-                          
-                          {item.bloco_andar && <span className="badge-info ms-2">Local: {item.bloco_andar}</span>}
-                          {item.capacidade && <span className="badge-info ms-2">Cap: {item.capacidade}</span>}
-                          
-                        </td>
+                        <tr><th>Dados Básicos</th><th>Ações</th></tr>
                       )}
-                      <td style={{width: '120px'}}>
-                        <button onClick={() => handleEdit(item)} className="action-btn edit"><Pencil size={18}/></button>
-                        <button onClick={() => handleDelete(item.id)} className="action-btn delete"><Trash2 size={18}/></button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                    </thead>
+                    <tbody>
+                      {dados.length === 0 ? (
+                        <tr><td colSpan="3" style={{textAlign:'center'}}>Nenhum registro encontrado.</td></tr>
+                      ) : dados.map(item => (
+                        <tr key={item.id}>
+                          {abaAtiva === 'alocacoes' ? (
+                            <>
+                              <td>
+                                <strong>{item.professor?.nome}</strong><br/>
+                                <small>{item.curso?.nome} | {item.data_ini_dic} a {item.data_fim_dic}</small>
+                              </td>
+                              <td><span className="badge-info">{item.sala?.nome}</span></td>
+                            </>
+                          ) : (
+                            <td>
+                              <strong>{item.nome}</strong>
+                              {item.email && <><br/><small>{item.email}</small></>}
+                              
+                              {item.bloco_andar && <span className="badge-info ms-2">Local: {item.bloco_andar}</span>}
+                              {item.capacidade && <span className="badge-info ms-2">Cap: {item.capacidade}</span>}
+                              
+                            </td>
+                          )}
+                          <td style={{width: '120px'}}>
+                            <button onClick={() => handleEdit(item)} className="action-btn edit"><Pencil size={18}/></button>
+                            <button onClick={() => handleDelete(item.id)} className="action-btn delete"><Trash2 size={18}/></button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </>
+            )}
             
           </div>
         )}
       </main>
+      
       {/* MODAL DE ALTERAÇÃO DE SENHA */}
       {modalSenha && (
         <div className="modal-overlay">
