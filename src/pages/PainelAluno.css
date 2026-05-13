@@ -1,3 +1,9 @@
+/* --- RESET FUNDAMENTAL PARA MOBILE --- */
+/* Garante que o padding nunca estoure o tamanho da tela */
+* {
+  box-sizing: border-box;
+}
+
 .leitura-container {
   font-family: system-ui, -apple-system, sans-serif;
   background-color: #ffffff; /* Fundo branco puro */
@@ -11,14 +17,11 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 25px;
-  height: 75px;
-  background-color: #ffffff; /* Fundo branco puro */
-  
-  /* Sombras que criam o efeito de relevo/fusão */
+  height: 80px; /* Aumentei sutilmente para acomodar toques na barra superior */
+  background-color: #ffffff; 
   box-shadow: 
     inset 0 -1px 0 rgba(0,0,0,0.05),
     0 4px 10px rgba(0,0,0,0.02);
-  
   position: sticky;
   top: 0;
   z-index: 100;
@@ -36,9 +39,9 @@
   object-fit: contain;
   display: block;
   border-radius: 20px; 
-  background-color: #ffffff; /* Fundo branco puro */
+  background-color: #ffffff; 
   padding: 10px; 
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.10); /* Sombra levemente reduzida para o fundo branco */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.10); 
 }
 
 /* --- O SLOGAN BEM ESPESSO E EM NEGRITO --- */
@@ -53,7 +56,7 @@
 }
 
 .btn-login-icone {
-  background: #ffffff; /* Fundo branco puro */
+  background: #ffffff; 
   border: none;
   cursor: pointer;
   padding: 10px;
@@ -61,6 +64,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: 48px; /* Regra de toque Apple/Google */
+  min-height: 48px; /* Regra de toque Apple/Google */
   transition: all 0.3s ease;
   box-shadow: 
     4px 4px 8px #ebecef,
@@ -76,7 +81,7 @@
 
 /* --- FILTROS --- */
 .filtros-section {
-  background-color: #ffffff; /* Fundo branco puro */
+  background-color: #ffffff; 
   padding: 20px;
 }
 
@@ -98,19 +103,21 @@
   position: absolute;
   top: -10px;
   left: 10px;
-  background: #ffffff; /* Fundo branco puro */
+  background: #ffffff; 
   padding: 0 5px;
   font-size: 12px;
   color: #666;
+  z-index: 1; /* Garante que a label não seja engolida pelo Select */
 }
 
 .input-group-filtro select {
   padding: 12px;
   border: none;
   border-radius: 12px;
-  font-size: 16px;
+  font-size: 16px; /* Impede Zoom forçado no iPhone */
+  min-height: 48px; /* Área de toque estendida */
   appearance: none;
-  background-color: #ffffff; /* Fundo branco puro */
+  background-color: #ffffff; 
   box-shadow: 
     inset 3px 3px 6px #ebecef,
     inset -3px -3px 6px #ffffff;
@@ -118,10 +125,15 @@
 }
 
 .btn-calendario {
-  background: #ffffff; /* Fundo branco puro */
+  background: #ffffff; 
   border: none;
   border-radius: 12px;
-  padding: 10px 12px;
+  padding: 10px;
+  min-width: 48px; /* Regra de toque */
+  min-height: 48px; /* Regra de toque */
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
   box-shadow: 
     3px 3px 6px #ebecef,
@@ -132,27 +144,35 @@
 .filtros-turno {
   display: flex;
   gap: 12px;
-  overflow-x: auto;
-  padding: 5px 0;
+  overflow-x: auto; /* Permite rolar os turnos horizontalmente sem quebrar a tela */
+  padding: 5px 0 10px 0; /* Padding inferior levemente maior para a barra de rolagem não cortar a sombra */
+  -webkit-overflow-scrolling: touch; /* Rolagem suave no iPhone */
+}
+
+/* Esconde a barra de rolagem horizontal nativa, deixando só os botões deslizarem */
+.filtros-turno::-webkit-scrollbar {
+  display: none;
 }
 
 .btn-turno {
-  background-color: #ffffff; /* Fundo branco puro */
+  background-color: #ffffff; 
   border: none;
   border-radius: 50px;
   padding: 10px 20px;
+  min-height: 44px; /* Toque acessível */
   font-size: 14px;
   color: #666;
-  white-space: nowrap;
+  white-space: nowrap; /* Impede que o texto "Matutino" quebre em duas linhas */
   cursor: pointer;
   box-shadow: 
     3px 3px 6px #ebecef,
     -3px -3px 6px #ffffff;
   transition: 0.2s;
+  display: flex;
+  align-items: center;
 }
 
 .btn-turno.ativo {
-  background-color: #ffffff; /* Fundo branco puro */
   color: #005A9C;
   font-weight: bold;
   box-shadow: 
@@ -162,9 +182,9 @@
 
 /* --- BARRA DE STATUS --- */
 .status-bar {
-  background-color: #f1f3f5; /* Um cinza bem leve para contrastar com o branco puro */
+  background-color: #f1f3f5; 
   text-align: center;
-  padding: 8px;
+  padding: 8px 12px;
   font-size: 13px;
   color: #777;
   border-radius: 50px;
@@ -180,16 +200,16 @@
 }
 
 .card-turma {
-  background: #ffffff; /* Fundo branco puro */
+  background: #ffffff; 
   border-radius: 15px;
   border: none;
   overflow: hidden;
   box-shadow: 
-    6px 6px 15px rgba(0,0,0,0.06); /* Sombra ajustada para o branco */
+    6px 6px 15px rgba(0,0,0,0.06); 
 }
 
 .card-turma-header {
-  background-color: #005A9C; /* Atualizado para o Azul SENAI */
+  background-color: #005A9C; 
   color: white;
   display: flex;
   justify-content: space-between;
@@ -248,15 +268,26 @@
 
 .loading-mensagem, .empty-state { text-align: center; margin-top: 40px; color: #666; }
 
-/* Quando a tela for menor que 768px (celulares e tablets pequenos) */
-@media (max-width: 768px) {
-  body {
-    font-size: 16px; /* Aumenta a fonte base */
+/* --- O NOVO AJUSTE MOBILE LIMPO --- */
+/* Em telas de celular menores, ajustamos pequenos espaçamentos, mas sem quebrar as linhas */
+@media (max-width: 480px) {
+  .leitura-header {
+    padding: 0 15px;
   }
   
-  /* Se tiver menus ou caixas espremidas, você diz para elas ocuparem 100% da tela */
-  .container, .painel {
-    width: 100%;
-    padding: 10px;
+  .logo-img {
+    height: 52px; /* Reduz a logo milimetricamente para dar espaço na barra superior */
+  }
+  
+  .slogan-texto {
+    font-size: 13px; /* Reduz o slogan sutilmente para não encavalar no ícone de login */
+  }
+
+  .filtros-section {
+    padding: 15px;
+  }
+  
+  .cards-list {
+    padding: 15px;
   }
 }

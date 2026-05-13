@@ -1,10 +1,19 @@
+/* --- RESET BÁSICO --- */
+* {
+  box-sizing: border-box;
+}
+
 .navbar {
   background-color: #005A9C; /* Azul padrão SENAI */
   color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 30px;
+  
+  /* A MÁGICA DO iPHONE E ANDROID: 
+     O env() garante que a barra não fique atrás da câmera ou do relógio do celular */
+  padding: max(15px, env(safe-area-inset-top)) 30px 15px 30px;
+  
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
   position: sticky;
   top: 0;
@@ -31,10 +40,12 @@
   text-decoration: none;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   font-weight: 500;
   padding: 10px 15px;
   border-radius: 8px;
+  min-height: 48px; /* Regra de Toque Acessível (Dedo Gordo) */
   transition: all 0.2s ease;
 }
 
@@ -50,45 +61,24 @@
   font-weight: bold;
 }
 
-/* Regras para Celulares */
-@media (max-width: 600px) {
+/* --- O AJUSTE PROFISSIONAL PARA MOBILE --- */
+@media (max-width: 768px) {
   .navbar {
-    padding: 10px 15px;
+    /* Mantém a proteção da câmera do celular, mas reduz as laterais */
+    padding: max(10px, env(safe-area-inset-top)) 15px 10px 15px;
   }
   
   .link-text {
     display: none; /* Esconde o texto no celular para economizar espaço */
   }
   
+  .navbar-links {
+    gap: 5px; /* Aproxima os botões para não espremer o título */
+  }
+  
   .nav-link {
-    padding: 10px; /* Deixa o botão mais quadrado só com o ícone */
-  }
-}
-
-/* REGRA DE EMERGÊNCIA PARA MOBILE */
-@media (max-width: 768px) {
-  /* Impede que as caixas vazem da tela */
-  * {
-    box-sizing: border-box !important;
-    max-width: 100vw !important; 
-  }
-
-  /* Faz os containers ocuparem a tela toda, sem margens gigantes */
-  .container, .painel, .form-container, body, #root {
-    width: 100% !important;
-    min-width: 100% !important;
-    padding: 10px !important;
-    margin: 0 !important;
-  }
-
-  /* Aumenta as fontes para ficarem legíveis no toque */
-  p, span, input, button, label {
-    font-size: 16px !important;
-  }
-
-  /* Transforma linhas horizontais em blocos empilhados */
-  .linha, .row, form {
-    display: flex !important;
-    flex-direction: column !important;
+    padding: 10px; 
+    min-width: 48px; /* Transforma o botão sem texto num quadrado perfeito para o toque */
+    border-radius: 12px;
   }
 }

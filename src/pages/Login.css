@@ -1,3 +1,9 @@
+/* --- RESET FUNDAMENTAL PARA MOBILE --- */
+/* Garante que o padding nunca faça um elemento ultrapassar a largura da tela */
+* {
+  box-sizing: border-box;
+}
+
 .login-container {
   min-height: 100vh;
   display: flex;
@@ -5,13 +11,13 @@
   align-items: center;
   background: linear-gradient(135deg, #f4f7f6 0%, #e0e8e5 100%);
   font-family: system-ui, -apple-system, sans-serif;
-  padding: 20px;
+  padding: 20px; /* O respiro seguro que impede o card de encostar nas bordas do celular */
 }
 
 .login-card {
   background: white;
   width: 100%;
-  max-width: 400px;
+  max-width: 400px; /* Mantive a mágica: no PC trava em 400px, no celular assume 100% */
   border-radius: 16px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   padding: 40px 30px;
@@ -23,10 +29,10 @@
   margin-bottom: 30px;
 }
 
-/* --- MUDANÇA AQUI: Trocamos o circulo pela imagem --- */
 .logo-imagem {
-  height: 160px; /* Tamanho ajustável */
+  height: 160px; 
   width: auto;
+  max-width: 100%; /* Proteção para a imagem nunca vazar a caixa */
   object-fit: contain;
   margin: 0 auto 15px;
   display: block;
@@ -47,24 +53,78 @@
   border: 1px solid #ffcdd2;
 }
 
-.login-form { display: flex; flex-direction: column; gap: 15px; }
+.login-form { display: flex; flex-direction: column; gap: 15px; width: 100%; }
 .login-form h3 { margin: 0 0 10px; color: #333; text-align: center; font-size: 18px; }
 .texto-instrucao { font-size: 14px; color: #555; text-align: center; margin-bottom: 10px; line-height: 1.4; }
 
-.input-with-icon { position: relative; display: flex; align-items: center; }
+.input-with-icon { position: relative; display: flex; align-items: center; width: 100%; }
 .input-with-icon .icon { position: absolute; left: 12px; color: #888; }
-.input-with-icon input { width: 100%; padding: 12px 12px 12px 40px; border: 1px solid #ddd; border-radius: 8px; font-size: 15px; outline: none; transition: border-color 0.2s; }
+
+/* --- CIRURGIA AQUI: Regras de UI para Mobile --- */
+.input-with-icon input { 
+  width: 100%; 
+  padding: 12px 12px 12px 40px; 
+  border: 1px solid #ddd; 
+  border-radius: 8px; 
+  font-size: 16px; /* EXTREMAMENTE IMPORTANTE: Se for < 16, o iPhone dá zoom e quebra a tela */
+  min-height: 48px; /* Regra do toque confortável na tela (Apple/Google) */
+  outline: none; 
+  transition: border-color 0.2s; 
+}
 .input-with-icon input:focus { border-color: #005A9C; }
 
-.btn-primario { background-color: #005A9C; color: white; padding: 14px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; transition: 0.2s; margin-top: 10px; }
+.btn-primario { 
+  background-color: #005A9C; 
+  color: white; 
+  padding: 14px; 
+  border: none; 
+  border-radius: 8px; 
+  font-size: 16px; 
+  font-weight: bold; 
+  cursor: pointer; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  gap: 8px; 
+  transition: 0.2s; 
+  margin-top: 10px; 
+  min-height: 48px; /* Regra do toque confortável */
+  width: 100%;
+}
 .btn-primario:hover { background-color: #00457a; }
-.btn-primario:disabled { background-color: #88b3d6; cursor: not-allowed; } /* Efeito ao carregar */
+.btn-primario:disabled { background-color: #88b3d6; cursor: not-allowed; }
 
-.login-links { display: flex; justify-content: space-between; margin-top: 15px; }
-.btn-link, .btn-voltar { background: none; border: none; font-size: 14px; color: #666; cursor: pointer; transition: 0.2s; }
+.login-links { 
+  display: flex; 
+  justify-content: space-between; 
+  margin-top: 15px; 
+  gap: 10px;
+}
+
+/* Área de clique estendida para links (Regra do Dedo Gordo para textos menores) */
+.btn-link, .btn-voltar { 
+  background: none; 
+  border: none; 
+  font-size: 14px; 
+  color: #666; 
+  cursor: pointer; 
+  transition: 0.2s; 
+  min-height: 44px; /* Permite clicar com facilidade sem esbarrar no outro link */
+  padding: 5px 10px;
+  margin: -5px -10px; /* Compensa o padding para não desalinhar visualmente com o input */
+}
 .btn-link:hover { color: #005A9C; text-decoration: underline; }
 .btn-link.destaque { color: #005A9C; font-weight: bold; }
-.btn-voltar { display: flex; justify-content: center; align-items: center; gap: 5px; margin-top: 15px; color: #888; width: 100%; }
+
+.btn-voltar { 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  gap: 5px; 
+  margin-top: 15px; 
+  color: #888; 
+  width: 100%; 
+}
 .btn-voltar:hover { color: #333; }
 
 /* Animação suave na troca de telas */
@@ -73,43 +133,19 @@
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
-/* Quando a tela for menor que 768px (celulares e tablets pequenos) */
-@media (max-width: 768px) {
-  body {
-    font-size: 16px; /* Aumenta a fonte base */
+
+/* --- O NOVO AJUSTE MOBILE LIMPO E OFICIAL --- */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 30px 20px; /* Reduzimos um pouco o respiro interno para caber melhor em telinhas muito estreitas */
   }
   
-  /* Se tiver menus ou caixas espremidas, você diz para elas ocuparem 100% da tela */
-  .container, .painel {
-    width: 100%;
-    padding: 10px;
+  .logo-imagem {
+    height: 120px; /* Dá uma leve encolhida na logo para o teclado virtual não cobrir tudo na hora de digitar */
   }
-}
-
-/* REGRA DE EMERGÊNCIA PARA MOBILE */
-@media (max-width: 768px) {
-  /* Impede que as caixas vazem da tela */
-  * {
-    box-sizing: border-box !important;
-    max-width: 100vw !important; 
-  }
-
-  /* Faz os containers ocuparem a tela toda, sem margens gigantes */
-  .container, .painel, .form-container, body, #root {
-    width: 100% !important;
-    min-width: 100% !important;
-    padding: 10px !important;
-    margin: 0 !important;
-  }
-
-  /* Aumenta as fontes para ficarem legíveis no toque */
-  p, span, input, button, label {
-    font-size: 16px !important;
-  }
-
-  /* Transforma linhas horizontais em blocos empilhados */
-  .linha, .row, form {
-    display: flex !important;
-    flex-direction: column !important;
+  
+  .login-links {
+    flex-direction: column; /* Em celulares bem pequenos, empilha os botões ao invés de deixá-los grudados lado a lado */
+    align-items: center;
   }
 }

@@ -1,4 +1,11 @@
 /* ==============================
+   RESET FUNDAMENTAL PARA MOBILE
+   ============================== */
+* {
+  box-sizing: border-box;
+}
+
+/* ==============================
    LAYOUT BASE
    ============================== */
 .admin-layout {
@@ -14,15 +21,14 @@
    ============================== */
 .admin-sidebar {
   width: 260px;
-  /* Gradiente Azul Forçado */
   background: linear-gradient(180deg, #005A9C 0%, #003a66 100%) !important; 
   color: white;
   display: flex;
   flex-direction: column;
-  /* Arredondamento forçado nos cantos direitos */
   border-radius: 0 30px 30px 0 !important; 
   box-shadow: 4px 0 20px rgba(0, 90, 156, 0.2);
   min-height: 100vh; 
+  transition: all 0.3s ease;
 }
 
 .sidebar-header {
@@ -38,12 +44,10 @@
   object-fit: contain;
   display: block;
   margin: 0 auto;
-  
-  /* --- A MÁGICA DO ARREDONDAMENTO AQUI --- */
-  border-radius: 24px; /* Arredonda os cantos (estilo ícone de celular) */
-  background-color: white; /* Garante que o fundo fique branquinho */
-  padding: 12px; /* Dá um "respiro" para o desenho não grudar nas bordas */
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25); /* Sombra elegante para destacar do azul */
+  border-radius: 24px; 
+  background-color: white; 
+  padding: 12px; 
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25); 
 }
 
 .sidebar-nav {
@@ -54,13 +58,14 @@
   gap: 8px;
 }
 
-/* Botões Inativos do Menu */
+/* Botões do Menu com Área de Toque Otimizada */
 .nav-btn {
   display: flex;
   align-items: center;
   gap: 12px;
   width: 100%;
   padding: 12px 16px;
+  min-height: 48px; /* Regra do Toque */
   background: transparent !important;
   border: none;
   color: rgba(255, 255, 255, 0.8) !important;
@@ -76,7 +81,6 @@
   color: white !important;
 }
 
-/* O BOTÃO ATIVO (Branco com texto Azul) */
 .nav-btn.active {
   background-color: white !important;
   color: #005A9C !important;
@@ -94,10 +98,10 @@
   font-weight: bold;
 }
 
-/* Botão de Voltar ao Fim da Faixa */
 .logout-btn {
   margin: 20px;
   padding: 14px;
+  min-height: 48px; /* Regra do Toque */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -122,6 +126,7 @@
   flex: 1;
   padding: 40px;
   overflow-y: auto;
+  width: 100%;
 }
 
 .main-header {
@@ -129,6 +134,7 @@
   justify-content: space-between;
   align-items: flex-end;
   margin-bottom: 30px;
+  gap: 15px;
 }
 
 .main-header h1 {
@@ -142,15 +148,16 @@
   color: #666;
 }
 
-/* Botão de Novo Registro (Removendo o Vermelho) */
 .add-btn {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   background-color: #005A9C !important; 
   color: white !important;
   border: none;
   padding: 10px 20px;
+  min-height: 48px; /* Regra do Toque */
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
@@ -167,6 +174,7 @@
   border-radius: 16px;
   padding: 24px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  width: 100%;
 }
 
 .form-card {
@@ -217,15 +225,19 @@
   margin-left: 8px;
 }
 
-/* Botões de Ação na Tabela (Lápis e Lixeira) */
+/* Botões de Ação na Tabela */
 .action-btn {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 8px;
+  padding: 10px;
+  min-width: 44px; /* Área de toque segura dentro da tabela */
+  min-height: 44px;
   border-radius: 8px;
   transition: 0.2s;
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
   margin-right: 5px;
 }
 
@@ -266,12 +278,14 @@
 }
 
 .field input, .field select {
-  padding: 10px 14px;
+  padding: 12px 14px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  font-size: 15px;
+  font-size: 16px; /* EVITA ZOOM FORÇADO NO iOS */
+  min-height: 48px; /* Regra do Toque */
   outline: none;
   transition: 0.2s;
+  width: 100%;
 }
 
 .field input:focus, .field select:focus {
@@ -292,6 +306,10 @@
   border-radius: 8px;
   font-weight: bold;
   cursor: pointer;
+  min-height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .btn-primary:hover {
@@ -306,35 +324,107 @@
   border-radius: 8px;
   font-weight: bold;
   cursor: pointer;
+  min-height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .btn-secondary:hover {
   background-color: #e9ecef !important;
 }
-/* REGRA DE EMERGÊNCIA PARA MOBILE */
+
+/* ==============================
+   O VERDADEIRO DESIGN RESPONSIVO PARA MOBILE
+   ============================== */
 @media (max-width: 768px) {
-  /* Impede que as caixas vazem da tela */
-  * {
-    box-sizing: border-box !important;
-    max-width: 100vw !important; 
+  /* O layout empilha: O menu fica no topo e o conteúdo desce */
+  .admin-layout {
+    flex-direction: column;
   }
 
-  /* Faz os containers ocuparem a tela toda, sem margens gigantes */
-  .container, .painel, .form-container, body, #root {
-    width: 100% !important;
-    min-width: 100% !important;
-    padding: 10px !important;
-    margin: 0 !important;
+  /* O menu lateral vira um cabeçalho superior */
+  .admin-sidebar {
+    width: 100%;
+    min-height: auto;
+    border-radius: 0 0 24px 24px !important; /* Arredonda para baixo */
+    padding-bottom: 10px;
+    position: relative;
+    z-index: 10;
   }
 
-  /* Aumenta as fontes para ficarem legíveis no toque */
-  p, span, input, button, label {
-    font-size: 16px !important;
+  .sidebar-header {
+    padding: 20px 15px 15px;
   }
 
-  /* Transforma linhas horizontais em blocos empilhados */
-  .linha, .row, form {
-    display: flex !important;
-    flex-direction: column !important;
+  .sidebar-logo {
+    max-width: 110px; /* Logo levemente menor no celular */
+  }
+
+  /* Transforma a lista de botões em uma barra deslizante horizontal */
+  .sidebar-nav {
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 10px 15px;
+    gap: 10px;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Esconde a barrinha feia de scroll do navegador nos botões */
+  .sidebar-nav::-webkit-scrollbar {
+    display: none; 
+  }
+
+  /* Os botões não esticam mais 100%, eles assumem o próprio tamanho e ficam lado a lado */
+  .nav-btn {
+    width: auto;
+    white-space: nowrap; /* Impede o texto de quebrar linha */
+    flex-shrink: 0; /* Impede o botão de esmagar */
+    padding: 10px 18px;
+  }
+
+  .nav-divider {
+    display: none; /* Escondemos os divisores de texto no mobile para economizar espaço */
+  }
+
+  .logout-btn {
+    margin: 5px 15px 10px; /* Reduz margens do botão sair no mobile */
+  }
+
+  /* Ajustes da Área de Conteúdo */
+  .admin-main {
+    padding: 20px 15px; /* Reduz o padding gigante das laterais */
+  }
+
+  .main-header {
+    flex-direction: column;
+    align-items: stretch; /* Faz o botão de "Novo" ocupar a largura toda */
+    text-align: center;
+  }
+
+  .main-header h1 {
+    font-size: 24px;
+  }
+
+  /* --- A MÁGICA DA TABELA --- */
+  /* Transforma a tabela num bloco com rolagem horizontal independente (swipe) */
+  .modern-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap; /* Mantém os textos em uma linha só para não bagunçar as colunas */
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Ajustes de Formulário */
+  .input-grid {
+    grid-template-columns: 1fr; /* Inputs um embaixo do outro */
+  }
+
+  .form-buttons {
+    flex-direction: column;
+  }
+
+  .btn-primary, .btn-secondary {
+    width: 100%; /* Botões gigantes e fáceis de clicar no celular */
   }
 }
