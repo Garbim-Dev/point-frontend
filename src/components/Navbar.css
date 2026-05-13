@@ -64,3 +64,16 @@
     padding: 10px; /* Deixa o botão mais quadrado só com o ícone */
   }
 }
+
+/* Quando a tela for menor que 768px (celulares e tablets pequenos) */
+@media (max-width: 768px) {
+  body {
+    font-size: 16px; /* Aumenta a fonte base */
+  }
+  
+  /* Se tiver menus ou caixas espremidas, você diz para elas ocuparem 100% da tela */
+  .container, .painel {
+    width: 100%;
+    padding: 10px;
+  }
+}
